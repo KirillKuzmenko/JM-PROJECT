@@ -66,8 +66,8 @@ public class ItemInfoDaoImpl extends AbstractDAO<ItemInfo, Long> implements Item
     public List<ItemSearchDto> getItemSearchDtoBySearch(String search) {
         return entityManager.createQuery("" +
                 "SELECT NEW jm.stockx.dto.itemInfo.ItemSearchDto(i.itemCategory, COUNT(i)) " +
-                "FROM ItemInfo i " +
-                "WHERE TRIM(LOWER(i.item.name)) LIKE LOWER(CONCAT('%', :search, '%')) " +
+                "FROM ItemInfo i JOIN Item it ON i.id = it.id " +
+                "WHERE TRIM(LOWER(it.name)) LIKE LOWER(CONCAT('%', :search, '%')) " +
                 "GROUP BY i.itemCategory " +
                 "ORDER BY i.itemCategory DESC " +
                 "", ItemSearchDto.class)
